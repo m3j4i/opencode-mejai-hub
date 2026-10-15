@@ -158,7 +158,6 @@ export function cleanConfig(config) {
     },
   };
   clean.instructions = ["INSTRUCOES.md", "RECUPERACAO.md", "WEB-E-MCP.md", "LANGUAGE.md"];
-  clean.plugin = [];
   clean.skills = { paths: ["skills"] };
   clean.mcp = {};
   return clean;

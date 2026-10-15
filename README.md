@@ -9,7 +9,7 @@
 ![Plataformas](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux-68766d?style=flat-square)
 ![Idiomas](https://img.shields.io/badge/languages-PT--BR%20%7C%20EN%20%7C%20RU-68766d?style=flat-square)
 
-**[Baixar a versão](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261014) · [Documentação](mejai/docs/) · [Reportar um problema](https://github.com/m3j4i/opencode-mejai-hub/issues)**
+**[Atualização do chat](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261015) · [Baixar o pacote completo](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261014) · [Documentação](mejai/docs/) · [Reportar um problema](https://github.com/m3j4i/opencode-mejai-hub/issues)**
 
 </div>
 

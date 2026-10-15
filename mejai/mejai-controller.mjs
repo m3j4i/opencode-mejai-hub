@@ -1,5 +1,6 @@
 import {runtimeStatus} from './runtime-status.mjs';
-import fs from 'node:fs/promises';import fss from 'node:fs';import path from 'node:path';import net from 'node:net';import {spawn,execFile} from 'node:child_process';import {promisify} from 'node:util';import {pathToFileURL} from 'node:url';import {createHash,randomUUID} from 'node:crypto';
+import {runtimeConfigContent,singleStartup,isLegacyServer,freePort} from './src/services/startup-service.mjs';
+import fs from 'node:fs/promises';import fss from 'node:fs';import path from 'node:path';import {spawn,execFile} from 'node:child_process';import {promisify} from 'node:util';import {pathToFileURL} from 'node:url';import {createHash,randomUUID} from 'node:crypto';
 import {base,bin,runtime,windows,environment} from './platform.mjs';
 import {writeTextAtomic} from './lib/storage.mjs';import {sync} from './sincronizar-modelos.mjs';
 import {relocate} from './localizar-sessoes.mjs';
@@ -17,7 +18,7 @@ export async function api(url,options={}){const response=await fetch(url,{...opt
 export async function findServer(){
  let saved;try{saved=JSON.parse(await fs.readFile(connectionFile));}catch{}
  const ports=[...new Set([saved?.port,...Array.from({length:31},(_,i)=>4096+i)].filter(Boolean))];
- for(const port of ports){try{const config=await api('http://127.0.0.1:'+port+'/config');if(config.instructions?.includes(path.join(base,'INSTRUCOES.md')))return {port,url:'http://127.0.0.1:'+port,pid:saved?.port===port?saved.pid:null,runID:saved?.port===port?saved.runID:null,legacy:!config.instructions.includes(path.join(base,'LANGUAGE.md'))||!config.provider?.colibri||!config.plugin?.some(p=>p.endsWith('/autonomy.mjs'))};}catch{}}
+ for(const port of ports){try{const config=await api('http://127.0.0.1:'+port+'/config');if(config.instructions?.includes(path.join(base,'INSTRUCOES.md')))return {port,url:'http://127.0.0.1:'+port,pid:saved?.port===port?saved.pid:null,runID:saved?.port===port?saved.runID:null,legacy:isLegacyServer(config,base)};}catch{}}
  return null;
 }
 export async function state(){const server=await findServer();let progress;try{progress=JSON.parse(await fs.readFile(path.join(base,'dados/progresso/atual.json')));}catch{}return {name:'MEJAI',platform:process.platform,server,progress,error:lastError,preparation:preparation.state(),runtime:await runtimeStatus(base,server,api)};}
@@ -33,7 +34,7 @@ export async function prepare(){
  config.skills={...config.skills,paths:[path.join(base,'skills')]};
  for(const key of ['playwright','memory','context7','deepwiki'])if(config.mcp[key])config.mcp[key].enabled=false;
  config.mcp.habilidades={type:'local',enabled:true,command:[bin.node,path.join(base,'habilidades.mjs')],timeout:150000};
- const configFile=path.join(base,'dados','config-'+process.platform+'.json');await writeTextAtomic(configFile,JSON.stringify(config,null,2));env.OPENCODE_CONFIG=configFile;
+ const configFile=path.join(base,'dados','config-'+process.platform+'.json');await writeTextAtomic(configFile,JSON.stringify(config,null,2));env.OPENCODE_CONFIG=configFile;env.OPENCODE_CONFIG_CONTENT=runtimeConfigContent(config,env.OPENCODE_CONFIG_CONTENT);
  env.PLAYWRIGHT_BROWSERS_PATH=runtime('browsers');process.env.PLAYWRIGHT_BROWSERS_PATH=env.PLAYWRIGHT_BROWSERS_PATH;
  const {chromium}=await import(pathToFileURL(runtime('browser/node_modules/playwright/index.mjs')));
  let executablePath=chromium.executablePath();if(windows){try{const old=JSON.parse(await fs.readFile(path.join(base,'navegador-config.json')));await fs.access(old.executablePath);executablePath=old.executablePath;}catch{}}
@@ -42,13 +43,12 @@ export async function prepare(){
  const dap=path.join(mcpHome,windows?'AppData/Roaming/debugmcp':'.config/debugmcp');await fs.mkdir(dap,{recursive:true});let previousDAP={};try{previousDAP=JSON.parse(await fs.readFile(path.join(dap,'config.json'),'utf8'));}catch{}await writeTextAtomic(path.join(dap,'config.json'),JSON.stringify({...previousDAP,version:1,adapters:{...previousDAP.adapters,python:{command:bin.python,args:['-m','debugpy.adapter'],type:'python',extensions:['.py'],transport:'stdio',launch:{python:bin.python}}}}));
  return {env,configFile};
 }
-async function freePort(){const server=net.createServer();await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});const port=server.address().port;await new Promise(r=>server.close(r));return port;}
-export async function start(){const existing=await findServer();if(existing&&!existing.legacy){attachMonitor(existing);prepareFirstMessage(existing);return existing;}if(existing?.legacy)await stop();const {env,configFile}=await prepare();await fs.mkdir(path.join(base,'tarefas'),{recursive:true});await fs.mkdir(path.join(base,'logs'),{recursive:true});const port=await freePort();
+export const start=singleStartup(async()=>{const existing=await findServer();if(existing&&!existing.legacy){attachMonitor(existing);prepareFirstMessage(existing);return existing;}if(existing?.legacy)await stop();const {env,configFile}=await prepare();await fs.mkdir(path.join(base,'tarefas'),{recursive:true});await fs.mkdir(path.join(base,'logs'),{recursive:true});const port=await freePort();
  serverRunID=randomUUID();const out=fss.openSync(path.join(base,'logs/mejai-server.log'),'a');child=spawn(bin.opencode,['serve','--hostname','127.0.0.1','--port',String(port)],{cwd:path.join(base,'tarefas'),env:{...env,MEJAI_RUN_ID:serverRunID,AGENTE_SERVER_URL:'http://127.0.0.1:'+port},detached:true,windowsHide:true,stdio:['ignore',out,out]});child.unref();fss.closeSync(out);
  child.on('error',e=>{lastError=e.message;});child.on('exit',()=>{child=null;clearInterval(monitor);});
  await fs.writeFile(connectionFile,JSON.stringify({port,pid:child.pid,runID:serverRunID,platform:process.platform}));
  for(let i=0;i<120;i++){if(!child)throw Error(lastError||'OpenCode exited. Read logs/mejai-server.log.');try{await api('http://127.0.0.1:'+port+'/global/health');attachMonitor({url:'http://127.0.0.1:'+port});prepareFirstMessage({url:'http://127.0.0.1:'+port});return {port,url:'http://127.0.0.1:'+port,pid:child.pid,runID:serverRunID};}catch{}await new Promise(r=>setTimeout(r,500));}throw Error('OpenCode did not become ready. Read logs/mejai-server.log.');
-}
+});
 export async function stop(){preparationVersion++;preparation.cancel();const server=await findServer();if(!server)return {stopped:true,alreadyStopped:true};const states=await api(server.url+'/session/status');if(Object.values(states).some(s=>s.type!=='idle'))throw Error('The agent is working. Cancel the task in the chat or wait for it to finish.');
  // Dispose through the verified local API before stopping the process owned by this launcher.
  if(child){child.kill();await new Promise(r=>{if(!child)return r();child.once('exit',r);setTimeout(r,5000).unref();});}

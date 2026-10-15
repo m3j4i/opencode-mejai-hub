@@ -9,7 +9,7 @@ await fs.mkdir(reportDirectory,{recursive:true});
 const directory=await fs.mkdtemp(path.join(os.tmpdir(),'mejai-tests-'));
 await fs.mkdir(path.join(directory,'temp'));
 await fs.mkdir(path.join(directory,'work'),{recursive:true});
-const names=['inline-scripts','torch','chat-improvements','attachment-parts','chat-stream','hub-storage','thinking-watchdog','long-session','autonomy','autonomy-events','update-guard','first-message','colibri','mejai-reliability','content-completeness','review-fixes','model-sync','session-relocation','empty-recovery','browser-fixes','transfers','artifact-syntax','url-evidence','delete-conversations','editor','reset','portable-core','session-review'].filter(name=>process.platform==='win32'||!['editor','reset'].includes(name));
+const names=['startup','inline-scripts','torch','chat-improvements','attachment-parts','chat-stream','hub-storage','thinking-watchdog','long-session','autonomy','autonomy-events','update-guard','first-message','colibri','mejai-reliability','content-completeness','review-fixes','model-sync','session-relocation','empty-recovery','browser-fixes','transfers','artifact-syntax','url-evidence','delete-conversations','editor','reset','portable-core','session-review'].filter(name=>process.platform==='win32'||!['editor','reset'].includes(name));
 const results=[];
 for(const name of names){
  const result=await new Promise(resolve=>{

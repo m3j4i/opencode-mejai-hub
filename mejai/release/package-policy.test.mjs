@@ -56,6 +56,7 @@ test("public config is fresh, keeps rules and disables official upgrades", () =>
   assert.equal(clean.autoupdate, false);
   assert.deepEqual(clean.provider.ollama.models, {});
   assert.deepEqual(clean.mcp, {});
+  assert(!Object.hasOwn(clean, "plugin"), "Do not override generated runtime plugins");
   assert(!JSON.stringify(clean).includes("secret"));
   assert.equal(original.model, "private/model");
 });
