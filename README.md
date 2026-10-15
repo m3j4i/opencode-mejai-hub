@@ -15,7 +15,7 @@
 
 > **Versão experimental, pronta para uso local e avaliação.** Os testes de integração foram executados com serviços isolados. A qualidade das tarefas depende do modelo e das ferramentas configuradas.
 
-**Navegação rápida:** [Diferenças da fork](#-o-que-muda-nesta-fork) · [Chat](#-chat-feito-para-acompanhar-o-trabalho) · [Autonomia](#-autonomia-com-controles-e-limites) · [Ferramentas](#-ferramentas-para-trabalhar-além-do-código) · [Instalação](#-instalação) · [Desenvolvimento](#desenvolvimento) · [Licença](#-créditos-e-licença)
+**Navegação rápida:** [Skills](#skills-incluidas) · [Patches](#patches-da-fork) · [Diferenças da fork](#-o-que-muda-nesta-fork) · [Chat](#-chat-feito-para-acompanhar-o-trabalho) · [Autonomia](#-autonomia-com-controles-e-limites) · [Ferramentas](#-ferramentas-para-trabalhar-além-do-código) · [Instalação](#-instalação) · [Desenvolvimento](#desenvolvimento) · [Licença](#-créditos-e-licença)
 
 **Um assistente local para pesquisar, criar documentos, organizar arquivos, automatizar tarefas e desenvolver projetos — com chat, ferramentas e autonomia reunidos em um Hub.**
 
@@ -72,6 +72,70 @@ A indicação de conclusão é um relato do agente, acompanhado das evidências 
 - **Integrações MCP:** catálogo de ferramentas carregadas sob demanda, com configuração de contas quando necessário.
 
 As regras, skills e verificações acompanham o modelo selecionado. A disponibilidade de recursos depende das capacidades do modelo, da plataforma e das integrações configuradas.
+
+### O que já acompanha os pacotes
+
+| Área | Componentes preparados | O que permitem fazer |
+| --- | --- | --- |
+| Python e documentos | Python, python-docx, openpyxl, python-pptx, pypdf e PyMuPDF | Ler e produzir documentos, planilhas, slides e PDFs; executar scripts de processamento. |
+| OCR local | RapidOCR e ONNX Runtime | Extrair texto de imagens e PDFs digitalizados usando CPU. |
+| Navegação | Camoufox, Chromium e Playwright | Inspecionar páginas dinâmicas, preencher formulários, lidar com abas, screenshots e downloads. |
+| Código | Serena, servidores de linguagem Python/JS/TS e ast-grep | Navegação por símbolos, referências, refatoração e busca estrutural. |
+| Depuração | DebugMCP e adaptador Python/debugpy | Breakpoints, inspeção de variáveis e execução passo a passo; outras linguagens precisam de adaptador. |
+| Arquivos e processos | Filesystem MCP e Desktop Commander | Ler, editar e pesquisar arquivos, usar terminal e acompanhar processos. |
+| Memória e notas | Memory MCP e adaptador Obsidian | Grafo de memória persistente e leitura/escrita/pesquisa de notas Markdown locais. |
+| Mídia e arquivos compactados | FFmpeg/ffprobe e 7-Zip/7zz | Processamento e inspeção de mídia, extração e verificação de arquivos pelo terminal. |
+| Ambiente | Node.js, cliente Tor, Git/PowerShell no Windows e preparação Linux | Executar o Hub e seus adaptadores usando os caminhos da distribuição. Git e Bash são dependências do sistema no Linux. |
+
+Os adaptadores locais para **SQLite**, **PostgreSQL**, **MySQL** e **Docker** também acompanham o projeto. SQLite funciona sem servidor; PostgreSQL/MySQL exigem conexão e Docker exige um engine externo. Consultas SQL usam parâmetros e começam em modo de leitura, salvo solicitação explícita de escrita.
+
+O catálogo tem **39 entradas**, incluindo aliases, conectores remotos e requisitos externos. Context7, DeepWiki, GitHub, Brave, Notion, Linear, Slack, Figma, Apify, Atlassian e outros estão documentados no [catálogo completo](docs/MEJAI-CATALOG.md). Contas, chaves, planos pagos e serviços externos são configurados pelo usuário. A entrada Ego Lite está marcada como indisponível nesta versão.
+
+### Ferramentas carregadas quando são necessárias
+
+O roteador **habilidades** expõe quatro operações: status, search, details e call. O agente procura uma capacidade, lê o schema real e chama a ferramenta com os argumentos documentados. Os servidores são conectados sob demanda, evitando iniciar todos os conectores ou incluir todos os seus schemas em cada conversa.
+
+Isso permite manter um conjunto amplo de ferramentas acessível ao modelo local, com menos preparação desnecessária e tratamento explícito de dependências ausentes. Regras de uso e permissões continuam valendo para cada ação.
+
+<a id="skills-incluidas"></a>
+
+## 📚 Skills que acompanham a fork
+
+As skills são instruções de trabalho carregáveis pelo OpenCode. Elas ensinam como usar as ferramentas e conferir resultados; complementam as regras gerais aplicadas a todos os modelos selecionados.
+
+| Skill | Fluxo de trabalho |
+| --- | --- |
+| [browser-downloads](mejai/skills/browser-downloads/SKILL.md) | Pesquisar fontes reais, baixar usando a sessão de navegador e conferir tipo, tamanho e integridade. |
+| [debug-live](mejai/skills/debug-live/SKILL.md) | Investigar bugs com breakpoints, variáveis, passos e inspeção da execução. |
+| [ferramentas-sob-demanda](mejai/skills/ferramentas-sob-demanda/SKILL.md) | Descobrir adaptadores, ler schemas e lidar corretamente com contas, bancos e serviços externos. |
+| [find-skills](mejai/skills/find-skills/SKILL.md) | Encontrar habilidades adicionais no ecossistema e orientar sua instalação. |
+| [systematic-debugging](mejai/skills/systematic-debugging/SKILL.md) | Investigar a causa antes de alterar código para corrigir um sintoma. |
+| [tor-navegacao](mejai/skills/tor-navegacao/SKILL.md) | Usar Torch pelo perfil Tor, verificar a rota e tratar downloads e falhas sem conexão direta como alternativa. |
+| [verification-before-completion](mejai/skills/verification-before-completion/SKILL.md) | Exigir evidências de verificação antes de declarar uma tarefa concluída. |
+
+As regras de [INSTRUCOES.md](mejai/INSTRUCOES.md), [RECUPERACAO.md](mejai/RECUPERACAO.md), [WEB-E-MCP.md](mejai/WEB-E-MCP.md) e [LANGUAGE.md](mejai/LANGUAGE.md) cobrem escopo, recuperação, pesquisa e idioma. Instalar uma skill não autoriza publicação, envio de mensagens, compras ou ações fora do pedido do usuário.
+
+<a id="patches-da-fork"></a>
+
+## 🔧 Patches e mudanças no comportamento
+
+Esta fork reúne alterações no motor, no Hub e nos plugins. São seis plugins principais configurados automaticamente, apoiados por módulos específicos de validação, contexto e recuperação.
+
+| Mudança | Problema tratado e comportamento resultante |
+| --- | --- |
+| Python nativo no motor | Scripts com múltiplas linhas e aspas são executados por uma ferramenta com campo source, timeout, cancelamento, permissão e saída limitada, reduzindo problemas de escape do shell. |
+| Shell por plataforma | O terminal usa PowerShell 7 no Windows e Bash no Linux, com os caminhos do Python e das ferramentas preparados para cada pacote. |
+| Validação de execução e artefatos | Registra erros de comandos, verifica sintaxe de formatos suportados e avisa sobre saídas inválidas ou incompletas. Existência do arquivo e exit code zero continuam sem provar a correção final. |
+| Contexto de sessões longas | Mantém um registro limitado do objetivo, correções humanas, checklist, artefatos, checks e falhas para apoiar a continuação após compactação. Lembretes automáticos são diferenciados de novos pedidos humanos. |
+| Recuperação de respostas vazias ou prematuras | Pode continuar uma tarefa após resposta vazia, promessa curta ou etapas ainda pendentes, com limites e verificação de progresso para conter loops. |
+| Pesquisa com evidências | Conserva URLs fornecidas ou observadas e orienta a verificar fonte, conteúdo e data. Endereço plausível ou snippet de busca não vira prova de acesso. |
+| Repetição de falhas HTTP | Interrompe a repetição do mesmo endereço após falhas 403/404 recorrentes e pede outra fonte verificada ou um relato do bloqueio. |
+| Entrega de código no chat | Orienta apresentar scripts e trechos úteis diretamente; o chat também pode recuperar código de escritas/edições bem-sucedidas do turno, dentro de limites. |
+| Preparação da primeira mensagem | Inicializa conexões e schemas e pode carregar antecipadamente o modelo Ollama selecionado, sem gerar uma resposta de teste. |
+| Autonomia com estado persistido | Usa o checklist e evidências observáveis para continuar, pausar diante de bloqueios e exigir retomada após reiniciar o agente. |
+| Preservação da fork | Bloqueia a atualização oficial no motor e nas configurações do Hub para proteger as alterações específicas. |
+
+Veja os [plugins](mejai/plugins/), a [ferramenta Python](packages/opencode/src/tool/python.ts) e a [preparação da primeira mensagem](mejai/first-message.mjs). Essas proteções apoiam a execução; o agente ainda depende do modelo e da verificação do resultado solicitado.
 
 ## 🌐 Navegação, Tor e Torch
 
