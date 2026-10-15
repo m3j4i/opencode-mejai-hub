@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import {humanRequests,compactEvidence,recoveryContext} from '../../plugins/long-session-core.mjs';import {decision} from '../../plugins/autonomy-core.mjs';
+const human=text=>({info:{role:'user',id:text.slice(0,20)},parts:[{type:'text',text}]});
+const messages=[human('Complete original-language document with paired Portuguese pages'),human('Use the desktop output folder'),...Array.from({length:30},()=>human('[MEJAI autonomy] Continue now'))];
+assert.equal(humanRequests(messages).length,2);assert.equal(humanRequests([human('Finish every chapter\n\n[MEJAI autonomy] automatic instructions')])[0].text,'Finish every chapter');assert.equal(humanRequests([human('continue')]).length,0);
+const checkpoint=compactEvidence({objective:humanRequests(messages)[0].text,requests:['Keep all chapters'],checks:[{result:'Only 2 pages; missing body'}],artifacts:{}});assert.match(checkpoint,/original-language/);assert.match(checkpoint,/Only 2 pages/);
+const failed={info:{role:'assistant',id:'failed',time:{completed:Date.now()}},parts:[{type:'tool',tool:'bash',state:{status:'completed',metadata:{exit:1},output:'COMANDO_FALHOU: missing source'}}]};
+const history=[...messages,failed];const advice=recoveryContext(history,{objective:'Complete document'});assert.match(advice,/missing source/);assert.match(advice,/BEFORE rerunning/);assert.match(advice,/original-language/);
+const outcome=decision(history,[{status:'pending',content:'Check body'}],{started:Date.now(),minutes:60,maxTurns:100,turns:2,stalled:2});assert.equal(outcome.action,'pause');
+assert(compactEvidence({objective:'a'.repeat(30000),requests:Array(9).fill('b'.repeat(9000))}).length<=14000);
+console.log('PASS long sessions: human requirements survive 30 automatic turns, failure output retained, targeted recovery, failed commands do not count as progress, bounded checkpoint.');

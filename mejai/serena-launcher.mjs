@@ -1,0 +1,12 @@
+import {runtime,bin,windows} from './platform.mjs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawn} from 'node:child_process';
+const base=path.dirname(fileURLToPath(import.meta.url));
+const env={...process.env,SERENA_HOME:path.join(base,'dados/serena'),PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',PYTHONNOUSERSITE:'1'};
+const key=Object.keys(env).find(k=>k.toLowerCase()==='path')||'PATH';
+env[key]=[path.dirname(bin.serena),path.dirname(bin.node),...(windows?[runtime('git/cmd')]:[]),env[key]||''].join(path.delimiter);
+const child=spawn(bin.serena,[path.join(base,'serena-bootstrap.py')],{cwd:base,env,stdio:'inherit',windowsHide:true});
+child.on('error',e=>{console.error('Serena: '+e.message);process.exitCode=1;});
+child.on('exit',code=>{process.exitCode=code??1;});
+for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>child.kill(signal));

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>opencode (mejai hub)</title
+  ><link rel="stylesheet" href="/editor.css" /><link rel="stylesheet" href="/chat.css" /><link
+    rel="stylesheet"
+    href="/hub.css"
+  />
+  <h1>
+    <span class="brand-word">opencode</span>
+    <span class="brand-config">(mejai hub)</span>
+  </h1>
+  <p>Your local assistant. Chat, files and controls in one place.</p>
+  <div class="row" id="language-controls">
+    <label
+      >Language
+      <select id="hub-language" aria-label="Interface language"></select></label
+    ><button
+      id="scan-languages"
+      title="Scan the linguagens folder for new .language files without restarting the hub."
+    >
+      Scan languages</button
+    ><span id="language-status" role="status"></span>
+  </div>
+  <div class="runtime-lights" role="status" aria-live="polite">
+    <div id="agent-light" class="runtime-indicator" data-signal="unknown">Agent · Checking…</div>
+    <div id="autonomy-light" class="runtime-indicator" data-signal="unknown">
+      Autonomy · Checking…
+    </div>
+  </div>
+  <div class="grid">
+    <button class="primary" data-action="chat" title="Choose a local model and ask for work">
+      Open chat</button
+    ><button data-action="providers" title="Choose Ollama or Colibri and manage its model">
+      Models and providers</button
+    ><button data-action="settings" title="Edit rules and configuration with CodeMirror">
+      Rules editor</button
+    ><button data-action="maintenance" title="Status, tests, files and reset">Maintenance</button>
+  </div>
+  <div class="row"><button id="stop">Stop agent</button></div>
+  <p id="status">Checking agent status...</p>
+  <p id="preparation" class="muted"></p>
+  <div id="message" role="status"></div>
+  <section id="integrated-chat" hidden></section>
+  <dialog id="modal">
+    <header>
+      <h2 id="title"></h2>
+      <button id="close">Close</button>
+    </header>
+    <div id="content"></div>
+    <p id="dialog-message" role="status" style="white-space: pre-wrap"></p>
+  </dialog>
+  <script type="module" src="/hub.js"></script>
+</html>

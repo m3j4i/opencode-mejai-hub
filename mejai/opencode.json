@@ -1,0 +1,42 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "*": "allow",
+    "external_directory": "allow",
+    "doom_loop": "deny",
+    "question": "allow",
+    "task": "deny"
+  },
+  "autoupdate": false,
+  "share": "disabled",
+  "enabled_providers": [
+    "ollama",
+    "colibri"
+  ],
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local models (Ollama)",
+      "options": {
+        "baseURL": "http://127.0.0.1:11434/v1",
+        "timeout": false,
+        "headerTimeout": 1800000,
+        "chunkTimeout": 600000
+      },
+      "models": {}
+    }
+  },
+  "instructions": [
+    "INSTRUCOES.md",
+    "RECUPERACAO.md",
+    "WEB-E-MCP.md",
+    "LANGUAGE.md"
+  ],
+  "plugin": [],
+  "skills": {
+    "paths": [
+      "skills"
+    ]
+  },
+  "mcp": {}
+}

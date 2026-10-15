@@ -1,0 +1,11 @@
+runtime/
+dados/
+logs/
+models/
+tarefas/
+downloads/
+node_modules/
+opencode.json
+colibri.json
+navegador-config.json
+fork.json

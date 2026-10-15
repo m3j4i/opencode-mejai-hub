@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';import {decision} from '../../plugins/autonomy-core.mjs';
+const record={started:Date.now(),minutes:60,maxTurns:10,turns:0};
+const user={info:{role:'user'},parts:[{type:'text',text:'Create a checked file.'}]};
+const answer=(text,id='msg1')=>({info:{role:'assistant',id,time:{completed:Date.now()},providerID:'ollama',modelID:'fixture'},parts:[{type:'text',text}]});
+const done=[{content:'Create and check output',status:'completed'}],pending=[{content:'Create and check output',status:'pending'}];
+assert.equal(decision([user,answer('[MEJAI autonomy: complete]')],pending,record).action,'continue');
+assert.equal(decision([user,answer('[MEJAI autonomy: complete]')],done,record).action,'complete');
+assert.equal(decision([user,answer('[MEJAI autonomy: blocked]')],pending,record).action,'pause');
+assert.equal(decision([user,answer('Working')],pending,{...record,lastMessage:'msg1'}).action,'wait');
+assert.equal(decision([user,answer('Working')],pending,{...record,turns:10}).action,'pause');
+assert.equal(decision([user,answer('Working')],pending,{...record,started:0}).action,'pause');
+assert.equal(decision([user,answer('Working')],pending,{...record,stalled:2}).action,'pause');
+const tool=answer('Working');tool.parts.push({type:'tool',tool:'write',state:{status:'completed',input:{filePath:'fixture'},output:'checked'}});
+const first=decision([user,tool],pending,record);assert.equal(first.stalled,0);assert.equal(decision([user,tool],pending,{...record,fingerprint:first.fingerprint,stalled:2}).action,'pause');
+assert.equal(decision([user],pending,record).action,'wait');
+console.log('PASS autonomy: checked completion, blockers, deduplication, limits and repeated lack of progress. No model prompts.');

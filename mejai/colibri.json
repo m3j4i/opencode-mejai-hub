@@ -1,0 +1,6 @@
+{
+  "modelDirectory": "",
+  "backend": "cpu",
+  "context": 16384,
+  "output": 4096
+}

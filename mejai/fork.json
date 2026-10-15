@@ -1,0 +1,8 @@
+{
+  "source": "See the separate source archive",
+  "version": "1.18.35-mejai.1",
+  "name": "opencode (mejai hub)",
+  "officialUpdates": false,
+  "baseCommit": "53d1eabb61e21162157817bf677da0a4ad3332e3",
+  "upstream": "https://github.com/anomalyco/opencode"
+}

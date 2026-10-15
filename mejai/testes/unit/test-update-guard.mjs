@@ -1,0 +1,6 @@
+import fs from 'node:fs/promises';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';import {backupBeforeUpdate,unchanged} from '../../update-guard.mjs';
+const root=await fs.mkdtemp(path.join(os.tmpdir(),'mejai-update-test-'));const kit=path.join(root,'kit'),backup=path.join(root,'backup');await fs.mkdir(kit);await fs.mkdir(backup);
+await fs.writeFile(path.join(kit,'opencode.json'),'{}');await fs.writeFile(path.join(kit,'binary'),'old');await fs.mkdir(path.join(kit,'dados/opencode-data'),{recursive:true});await fs.writeFile(path.join(kit,'dados/opencode-data/history'),'history');
+const entries=await backupBeforeUpdate(kit,backup,path.join(kit,'binary'));await unchanged(kit,entries);assert.equal(await fs.readFile(path.join(backup,'kit/dados/opencode-data/history'),'utf8'),'history');
+await fs.writeFile(path.join(kit,'opencode.json'),'{"changed":true}');await assert.rejects(unchanged(kit,entries),/protected file changed/);assert.equal(await fs.readFile(path.join(backup,'previous-executable'),'utf8'),'old');
+console.log('PASS update backup preserves original binary/history/configuration and detects concurrent edits.');await fs.rm(root,{recursive:true,force:true});

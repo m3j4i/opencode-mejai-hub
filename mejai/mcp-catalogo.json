@@ -1,0 +1,244 @@
+{
+  "github": {
+    "description": "Official GitHub: repositories, issues, pull requests and remote code",
+    "url": "https://api.githubcopilot.com/mcp/",
+    "key": "GITHUB_TOKEN",
+    "source": "https://github.com/github/github-mcp-server"
+  },
+  "git": {
+    "description": "Local Git history, status, diffs, branches and commits",
+    "python": "mcp_server_git",
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/git"
+  },
+  "puppeteer": {
+    "description": "Alternative browser via the installed Chrome DevTools backend: DOM, console, network and screenshots",
+    "alias": "chrome-devtools",
+    "source": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
+  },
+  "shadcn": {
+    "description": "Official shadcn UI component and registry discovery",
+    "entry": "shadcn/dist/index.js",
+    "args": [
+      "mcp",
+      "--cwd",
+      "{base}"
+    ],
+    "source": "https://ui.shadcn.com/docs/mcp"
+  },
+  "brave": {
+    "description": "Official Brave web, news and image search; API key required",
+    "entry": "@brave/brave-search-mcp-server/dist/index.js",
+    "args": [
+      "--transport",
+      "stdio"
+    ],
+    "key": "BRAVE_API_KEY",
+    "envKeys": {
+      "BRAVE_API_KEY": "BRAVE_API_KEY"
+    },
+    "source": "https://github.com/brave/brave-search-mcp-server"
+  },
+  "obsidian": {
+    "description": "Local Markdown vault: list, read, write and search notes without the Obsidian application",
+    "builtin": true,
+    "source": "https://help.obsidian.md/Files+and+folders/Manage+vaults"
+  },
+  "notion": {
+    "description": "Official Notion pages, documents and databases; OAuth required",
+    "url": "https://mcp.notion.com/mcp",
+    "oauth": true,
+    "source": "https://developers.notion.com/guides/mcp/get-started-with-mcp"
+  },
+  "linear": {
+    "description": "Official Linear projects, tasks and issues; OAuth required",
+    "url": "https://mcp.linear.app/mcp",
+    "oauth": true,
+    "source": "https://linear.app/docs/mcp"
+  },
+  "slack": {
+    "description": "Official Slack channels, messages and search; authorized workspace access required",
+    "url": "https://mcp.slack.com/mcp",
+    "oauth": true,
+    "source": "https://docs.slack.dev/ai/slack-mcp-server"
+  },
+  "figma": {
+    "description": "Official Figma design, components and layouts; OAuth and compatible plan/client required",
+    "url": "https://mcp.figma.com/mcp",
+    "oauth": true,
+    "source": "https://developers.figma.com/docs/figma-mcp-server/"
+  },
+  "reddit": {
+    "description": "Community Reddit posts, comments and search; limited RSS access or optional OAuth",
+    "entry": "reddit-mcp-server/dist/bin.js",
+    "envKeys": {
+      "REDDIT_CLIENT_ID": "REDDIT_CLIENT_ID",
+      "REDDIT_CLIENT_SECRET": "REDDIT_CLIENT_SECRET"
+    },
+    "environment": {
+      "REDDIT_MAX_RETRIES": "1"
+    },
+    "source": "https://github.com/jordanburke/reddit-mcp-server"
+  },
+  "tor": {
+    "description": "Local Tor SOCKS5 client: start, stop, status and HTTP/HTTPS/onion access with remote DNS",
+    "builtin": true,
+    "source": "https://download.torproject.org/tor/"
+  },
+  "tor-browser": {
+    "description": "Torch search for deepweb, Tor and onion requests; proxied browser with separate profile and downloads. Use browser_search engine=torch. Not Tor Browser's complete anonymity protections.",
+    "rootEntry": "navegador-completo.mjs",
+    "source": "https://playwright.dev/docs/api/class-browsertype#browser-type-launch-option-proxy"
+  },
+  "filesystem": {
+    "description": "Official filesystem: read, write, edit, list and search files",
+    "entry": "@modelcontextprotocol/server-filesystem/dist/index.js",
+    "args": [
+      "{base}"
+    ],
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem"
+  },
+  "chrome-devtools": {
+    "description": "Alternative browser debugging: DOM, console, network, performance and screenshots",
+    "entry": "chrome-devtools-mcp/build/src/bin/chrome-devtools-mcp.js",
+    "args": [
+      "--executable-path",
+      "{browser}",
+      "--user-data-dir",
+      "{base}/dados/chrome-devtools",
+      "--usage-statistics=false"
+    ],
+    "source": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
+  },
+  "ast-grep": {
+    "description": "Structural AST search for JavaScript, TypeScript, HTML and CSS",
+    "builtin": true,
+    "source": "https://github.com/ast-grep/ast-grep"
+  },
+  "debugmcp": {
+    "description": "Debug Adapter Protocol: breakpoints, variables and stepping; language adapter required",
+    "entry": "debugmcp/dist/debugmcp.js",
+    "args": [
+      "serve",
+      "--stdio"
+    ],
+    "source": "https://github.com/microsoft/DebugMCP"
+  },
+  "21st": {
+    "description": "21st.dev UI components and interface design",
+    "url": "https://21st.dev/api/mcp",
+    "key": "API_KEY_21ST",
+    "header": "x-api-key",
+    "source": "https://github.com/21st-dev/magic-mcp/blob/main/llms-install.md"
+  },
+  "desktop-commander": {
+    "description": "Local terminal, process and file management on the current platform",
+    "entry": "@wonderwhy-er/desktop-commander/dist/index.js",
+    "source": "https://github.com/wonderwhy-er/DesktopCommanderMCP"
+  },
+  "docker": {
+    "description": "Docker containers: list, inspect, logs, start and stop; external Docker engine required",
+    "builtin": true,
+    "source": "https://docs.docker.com/reference/api/engine/"
+  },
+  "sequential-thinking": {
+    "description": "Structured planning and hypothesis revision for complex problems",
+    "entry": "@modelcontextprotocol/server-sequential-thinking/dist/index.js",
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking"
+  },
+  "searxng": {
+    "description": "Private local web search; configured external SearXNG service required",
+    "builtin": true,
+    "source": "https://docs.searxng.org/"
+  },
+  "fetch": {
+    "description": "Extract readable text and links from public HTML pages without a browser",
+    "builtin": true,
+    "source": "https://github.com/mozilla/readability"
+  },
+  "apify": {
+    "description": "Apify scraping actors; account required for execution, free discovery available",
+    "url": "https://mcp.apify.com?telemetry-enabled=false",
+    "key": "APIFY_TOKEN",
+    "anonymousUrl": "https://mcp.apify.com?tools=search-actors,fetch-actor-details,search-apify-docs,fetch-apify-docs&telemetry-enabled=false",
+    "source": "https://docs.apify.com/integrations/mcp"
+  },
+  "postgres": {
+    "description": "PostgreSQL schemas and parameterized SQL; connection required",
+    "builtin": true,
+    "source": "https://node-postgres.com/"
+  },
+  "mysql": {
+    "description": "MySQL schemas and parameterized SQL; connection required",
+    "builtin": true,
+    "source": "https://sidorares.github.io/node-mysql2/docs"
+  },
+  "sqlite": {
+    "description": "Local SQLite tables and parameterized queries without a server",
+    "builtin": true,
+    "source": "https://nodejs.org/api/sqlite.html"
+  },
+  "1password": {
+    "description": "Official 1Password credentials integration; external application/account required",
+    "commandKey": "ONEPASSWORD_MCP",
+    "source": "https://github.com/1Password/1password-codex-plugin"
+  },
+  "alpha-vantage": {
+    "description": "Alpha Vantage financial and cryptocurrency data; API key required",
+    "url": "https://mcp.alphavantage.co/mcp",
+    "key": "ALPHAVANTAGE_API_KEY",
+    "queryKey": "apikey",
+    "source": "https://mcp.alphavantage.co/"
+  },
+  "atlassian": {
+    "description": "Official Jira and Confluence; authenticated endpoint and account authorization required",
+    "url": "https://mcp.atlassian.com/v2/mcp",
+    "key": "ATLASSIAN_AUTHORIZATION",
+    "header": "Authorization",
+    "source": "https://atlassian.github.io/atlassian-mcp-server/"
+  },
+  "ego-lite": {
+    "description": "Ego Lite Browser",
+    "unavailable": "This adapter is not installed or verified in this kit. Use navegador or chrome-devtools.",
+    "source": "https://lite.ego.app/"
+  },
+  "aisa": {
+    "description": "AIsa external tool discovery: search, SEO, social and finance; API key required, execution may incur charges",
+    "url": "https://mcp.aisa.one/mcp",
+    "key": "AISA_API_KEY",
+    "source": "https://aisa.one/pt-br/mcp"
+  },
+  "documentos": {
+    "description": "Local PDF, Word, spreadsheets, slides and image tools: read, create, merge and convert",
+    "builtin": true,
+    "source": "https://pypi.org/"
+  },
+  "serena": {
+    "source": "https://github.com/oraios/serena",
+    "description": "Semantic code navigation, references and refactoring. Activate only the requested project; Python and JavaScript/TypeScript language servers are bundled",
+    "rootEntry": "serena-launcher.mjs"
+  },
+  "ocr": {
+    "source": "https://github.com/RapidAI/RapidOCR",
+    "builtin": true,
+    "description": "Local CPU OCR for images, screenshots and scanned PDFs"
+  },
+  "memory": {
+    "description": "Persistent knowledge graph memory across conversations",
+    "entry": "@modelcontextprotocol/server-memory/dist/index.js",
+    "environment": {
+      "MEMORY_FILE_PATH": "{base}/dados/memoria.jsonl"
+    }
+  },
+  "deepwiki": {
+    "description": "GitHub repository documentation and architecture",
+    "url": "https://mcp.deepwiki.com/mcp"
+  },
+  "context7": {
+    "description": "Current library and framework documentation",
+    "url": "https://mcp.context7.com/mcp"
+  },
+  "navegador": {
+    "description": "Primary Camoufox browser: search, pages, downloads, forms, screenshots and optional human CAPTCHA assistance. Discover actual tools with search server=navegador",
+    "rootEntry": "navegador-completo.mjs"
+  }
+}

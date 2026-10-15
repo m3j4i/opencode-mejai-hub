@@ -1,0 +1,11 @@
+{
+  "engine": "torch",
+  "baseURL": "http://torchsfe235y6d7wguqo6g4ucxqq7frrm5fpgkjssdhthsq4kjmmisid.onion/",
+  "source": "https://torch.cx/about/",
+  "formSource": "https://torch.cx/",
+  "verifiedForm": {
+    "method": "GET",
+    "path": "/search/",
+    "queryParameter": "q"
+  }
+}

@@ -1,0 +1,66 @@
+MEJAI
+
+START HERE
+Windows: double-click Iniciar.cmd.
+Linux: open a terminal in this folder and run bash start.sh.
+Both launchers use the same hub, editor, application code and rules.
+
+The Linux launcher prepares native dependencies inside this folder when needed.
+The tested Linux environment is Ubuntu 26.04 x86_64. Automatic extraction of
+browser libraries currently requires Debian/Ubuntu package repositories.
+Other distributions and ARM machines have not been fully validated.
+Ollama must be installed and running, with at least one suitable local model.
+First-time setup and external research services require internet access.
+
+USING THE HUB
+Open chat: start OpenCode and choose a model. New Ollama models are discovered
+automatically while the agent runs. A model must support tools to act reliably.
+My files: open task outputs or downloads.
+Settings: edit shared rules and configuration in the integrated CodeMirror editor.
+JSON validation and revision checks prevent invalid or conflicting saves.
+Conversations: review and permanently delete selected conversations.
+Maintenance: diagnostics, tests, account connections, code snapshots, official
+GitHub OpenCode updates, rollback and reset.
+
+Internal instructions are written in English. LANGUAGE.md tells the assistant
+to respond in the language of the latest substantive human request.
+Automatic continuation checks unfinished work; it respects cancellation, missing
+authorization and missing user input, and stops repeated attempts without progress.
+An idle agent is not proof that a task succeeded. Inspect the result and its checks.
+
+YOUR FILES
+tarefas/      Default task output directory; your files are editable.
+downloads/    Downloaded files; inspect before running external software.
+dados/        Conversations, browser/account state, progress and caches.
+logs/         Diagnostic and test reports.
+runtime/      Bundled tools. Linux-native dependencies live in runtime/linux/.
+plugins/      Shared runtime checks and continuation logic.
+skills/       Shared task workflows.
+ui/           The shared hub and offline CodeMirror editor bundle.
+
+PORTABILITY
+Keep this whole folder together. Stop the agent and hub before moving it.
+Do not run the same data directory from Windows and Linux simultaneously.
+Native binaries differ between operating systems; the application itself is shared.
+Installed tools are preserved by reset. Ollama and its models are outside reset.
+External integrations may still require an account, API key, Docker, database or
+other external service. Installing an adapter does not create those services.
+
+RESET
+Reset kit data permanently removes conversations, work, downloads, browser profiles,
+logins, temporary data and logs inside this kit. Read its confirmation before use.
+It preserves root configuration, code and installed tools. Connection secrets and
+account state stored under dados are cleared. Files outside the kit are preserved.
+Use selective conversation deletion if you want to keep task outputs and downloads.
+
+UPDATES
+Update OpenCode uses the official anomalyco/opencode GitHub release and verifies
+its published SHA-256 and reported version. It replaces the executable only;
+configuration and conversations are not replaced. Stop the agent first.
+Restore previous OpenCode rolls back the saved executable. Run diagnostics after
+an update because future upstream releases can introduce compatibility changes.
+
+CODE AND EDITOR
+The embedded editor is CodeMirror (https://codemirror.net/), bundled for offline use.
+Legacy Windows control scripts remain available for compatibility; use the hub for
+normal operation. Technical identifiers and existing file names remain stable.

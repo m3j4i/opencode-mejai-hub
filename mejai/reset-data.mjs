@@ -1,0 +1,11 @@
+import fs from 'node:fs/promises';import path from 'node:path';
+export async function resetPlan(root){
+ root=path.resolve(root);if((await fs.lstat(root)).isSymbolicLink())throw Error('The kit root cannot be a symlink.');await fs.access(path.join(root,'runtime'));await fs.access(path.join(root,'Iniciar.cmd'));
+ const names=['dados','tarefas','downloads','logs','navegador','navegador-camoufox',...(await fs.readdir(root)).filter(n=>/^arquivos-da-instalacao-anterior-\d{8}-\d{6}$/.test(n))];
+ const keep=['dados/conexoes.json','dados/organizacao-visual.json','dados/opencode-config/opencode/node_modules','dados/opencode-config/opencode/package.json','dados/opencode-config/opencode/package-lock.json','dados/opencode-config/opencode/.gitignore','dados/opencode-cache/opencode/bin'].map(p=>path.join(root,p));
+ const entries=[];let bytes=0;
+ async function walk(file){if(keep.includes(file))return true;let stat;try{stat=await fs.lstat(file);}catch(e){if(e.code==='ENOENT')return false;throw e;}if(stat.isSymbolicLink()){entries.push({file,link:true});return false;}if(stat.isDirectory()){let retained=false;for(const name of await fs.readdir(file))if(await walk(path.join(file,name)))retained=true;if(!retained)entries.push({file,directory:true});return retained;}entries.push({file});bytes+=stat.size;return false;}
+ for(const name of names)await walk(path.join(root,name));return {root,entries,bytes,files:entries.filter(x=>!x.directory).length};
+}
+export async function eraseData(root){const plan=await resetPlan(root);for(const entry of plan.entries){const relative=path.relative(plan.root,entry.file);if(!relative||relative.startsWith('..')||path.isAbsolute(relative))throw Error('Path outside kit.');let parent=path.dirname(entry.file);while(parent!==plan.root){if((await fs.lstat(parent)).isSymbolicLink())throw Error('A parent changed into a symlink.');parent=path.dirname(parent);}const stat=await fs.lstat(entry.file);if(stat.isSymbolicLink()&&!entry.link)throw Error('A reset target changed into a symlink.');if(entry.directory)await fs.rmdir(entry.file);else await fs.unlink(entry.file);}
+ for(const name of ['dados','tarefas','downloads','logs'])await fs.mkdir(path.join(plan.root,name),{recursive:true});return {removed:plan.files,bytes:plan.bytes};}

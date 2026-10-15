@@ -1,0 +1,7 @@
+# Chat e navegação — plano
+
+1. Renderizar Markdown por tokens, usando elementos DOM e textContent, com tabelas roláveis e blocos de código com botão de cópia. HTML do modelo não é executado; links aceitam somente protocolos seguros. Cobrir conteúdo malicioso, código e tabelas em testes.
+2. Enter envia; Shift+Enter insere linha. Ignorar composição IME, repetição e submissão duplicada; manter rascunho quando houver erro.
+3. Editar mensagem humana cria uma nova conversa a partir do histórico anterior à mensagem. A original fica disponível; não reverte arquivos já produzidos. Validar identidade, texto original, estado ocioso e anexos; a confirmação explícita Edit and resend envia a edição na nova conversa. Se o envio falhar, retornar a identidade da nova conversa para recuperação, sem repetir o envio automaticamente. Testes usam transporte simulado ou armazenamento sem inferência.
+4. Navegadores trabalham sem janela por padrão, com opção explícita de modo visível. Revisar Camoufox e SOCKS com perfil separado, DNS remoto e WebRTC bloqueado para Tor. Nenhuma falha pode trocar Tor por conexão direta; downloads via Tor não podem usar o gerenciador que faz fetch direto.
+5. Atualizar os três catálogos de idiomas e a fonte da fork. Rodar regressões relevantes, qualidade e testes de navegador com conversas temporárias, sem prompts reais ao Ollama. Documentar o que não foi validado em rede externa.

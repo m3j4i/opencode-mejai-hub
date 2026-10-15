@@ -1,0 +1,10 @@
+import fs from 'node:fs/promises';import path from 'node:path';import assert from 'node:assert/strict';import {execFileSync} from 'node:child_process';
+import {urlsIn,approved,evidenceFrom} from '../../plugins/url-evidence-core.mjs';
+import {writeTextAtomic} from '../../lib/storage.mjs';
+import {relocate} from '../../localizar-sessoes.mjs';import {DatabaseSync} from 'node:sqlite';
+for(const text of ['https://example.com/Title_(edition)','(https://example.com/Title_(edition)).','[link](https://example.com/Title_(edition))'])assert(urlsIn(text).includes('https://example.com/Title_(edition)'),text);
+assert(approved('https://example.com/Title_(edition)',evidenceFrom([{info:{role:'user'},parts:[{type:'text',text:'Leia https://example.com/Title_(edition)'}]}])));
+assert(!approved('https://example.com/fake',evidenceFrom([])));
+const base=await fs.mkdtemp(path.resolve('work/review-fixture-')),file=path.join(base,'hidden.json');await fs.writeFile(file,'{}');if(process.platform==='win32')execFileSync('attrib.exe',['+h',file]);await writeTextAtomic(file,'{"saved":true}');assert(JSON.parse(await fs.readFile(file)).saved);
+const dir=path.join(base,'dados/opencode-data/opencode');await fs.mkdir(dir,{recursive:true});let db=new DatabaseSync(path.join(dir,'opencode.db'));db.exec('CREATE TABLE session_v2(id TEXT,directory TEXT,path TEXT)');db.prepare('INSERT INTO session_v2 VALUES (?,?,?)').run('new','C:/old/tarefas','old/tarefas');db.close();await fs.writeFile(path.join(base,'dados/portabilidade.json'),JSON.stringify({base:'C:/old'}));await relocate(base);db=new DatabaseSync(path.join(dir,'opencode.db'));assert.equal(db.prepare('SELECT directory FROM session_v2').get().directory,base.replaceAll('\\','/')+'/tarefas');db.close();
+console.log('PASS: valid parenthesized URLs, hidden config writes, new-format session relocation.');

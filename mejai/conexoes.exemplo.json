@@ -1,0 +1,19 @@
+{
+  "GITHUB_TOKEN": "",
+  "BRAVE_API_KEY": "",
+  "OBSIDIAN_VAULT": "",
+  "REDDIT_CLIENT_ID": "",
+  "REDDIT_CLIENT_SECRET": "",
+  "API_KEY_21ST": "",
+  "APIFY_TOKEN": "",
+  "ALPHAVANTAGE_API_KEY": "",
+  "ATLASSIAN_AUTHORIZATION": "",
+  "ATLASSIAN_URL": "https://mcp.atlassian.com/v2/mcp",
+  "AISA_API_KEY": "",
+  "AISA_MAX_PRICE_USD": 0,
+  "ONEPASSWORD_MCP": "",
+  "POSTGRES_URL": "",
+  "MYSQL_URL": "",
+  "SEARXNG_URL": "http://127.0.0.1:8088",
+  "DOCKER_PIPE": "//./pipe/docker_engine"
+}

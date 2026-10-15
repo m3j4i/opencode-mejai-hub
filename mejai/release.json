@@ -1,0 +1,11 @@
+{
+  "version": "1.18.35-mejai.1-hub.20261014",
+  "engineVersion": "1.18.35-mejai.1",
+  "platform": "windows",
+  "architecture": "x86_64",
+  "upstream": "https://github.com/anomalyco/opencode",
+  "upstreamCommit": "53d1eabb61e21162157817bf677da0a4ad3332e3",
+  "state": "fresh",
+  "bundledModels": false,
+  "automaticUpstreamUpdates": false
+}

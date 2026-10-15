@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" role="img" aria-labelledby="title description">
+  <title id="title">OpenCode — Mejai Hub</title>
+  <desc id="description">Assistente local com ferramentas, chat e autonomia. Windows e Linux.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1"><stop stop-color="#080808"/><stop offset="1" stop-color="#171c19"/></linearGradient>
+    <radialGradient id="light"><stop stop-color="#74e6a3" stop-opacity=".2"/><stop offset="1" stop-color="#74e6a3" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="340" rx="20" fill="url(#background)"/>
+  <circle cx="1080" cy="70" r="270" fill="url(#light)"/>
+  <path d="M60 58h1080M60 282h1080" stroke="#333a36"/>
+  <text x="60" y="112" fill="#8ee9ad" font-family="monospace" font-size="18" letter-spacing="3">LOCAL AI · OPEN SOURCE</text>
+  <text x="60" y="183" fill="#f2f5f3" font-family="monospace" font-weight="700" font-size="60">opencode</text>
+  <text x="415" y="183" fill="#8ee9ad" font-family="monospace" font-size="34">(mejai hub)</text>
+  <text x="60" y="232" fill="#b2bdb6" font-family="sans-serif" font-size="23">Chat. Ferramentas. Autonomia. Tudo no seu computador.</text>
+  <circle cx="1090" cy="182" r="9" fill="#8ee9ad"/>
+</svg>
