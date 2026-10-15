@@ -15,7 +15,7 @@
 
 > **Versão experimental, pronta para uso local e avaliação.** Os testes de integração foram executados com serviços isolados. A qualidade das tarefas depende do modelo e das ferramentas configuradas.
 
-**Navegação rápida:** [Diferenças da fork](#-o-que-muda-nesta-fork) · [Chat](#-chat-feito-para-acompanhar-o-trabalho) · [Autonomia](#-autonomia-com-controles-e-limites) · [Ferramentas](#-ferramentas-para-trabalhar-além-do-código) · [Instalação](#-instalação) · [Desenvolvimento](#-desenvolvimento-e-organização) · [Licença](#-créditos-e-licença)
+**Navegação rápida:** [Diferenças da fork](#-o-que-muda-nesta-fork) · [Chat](#-chat-feito-para-acompanhar-o-trabalho) · [Autonomia](#-autonomia-com-controles-e-limites) · [Ferramentas](#-ferramentas-para-trabalhar-além-do-código) · [Instalação](#-instalação) · [Desenvolvimento](#desenvolvimento) · [Licença](#-créditos-e-licença)
 
 **Um assistente local para pesquisar, criar documentos, organizar arquivos, automatizar tarefas e desenvolver projetos — com chat, ferramentas e autonomia reunidos em um Hub.**
 
@@ -131,6 +131,8 @@ Os pacotes começam sem conversas, contas, credenciais ou perfis pessoais de nav
 
 As atualizações oficiais estão bloqueadas para preservar esta fork. Extraia a nova versão em outra pasta, faça backup dos dados existentes e confira a compatibilidade antes de migrar. Esta versão não inclui um atualizador automático de releases da fork.
 
+<a id="desenvolvimento"></a>
+
 ## 🛠️ Desenvolvimento e organização
 
 A base nativa corresponde ao OpenCode **v1.18.35**, commit [53d1eabb61e2](https://github.com/anomalyco/opencode/tree/53d1eabb61e21162157817bf677da0a4ad3332e3), com versão da fork **1.18.35-mejai.1**.
@@ -167,3 +169,4 @@ Essas verificações usaram um serviço Ollama simulado, sem prompts reais. Elas
 Construído sobre o [OpenCode](https://github.com/anomalyco/opencode), com integrações de projetos como Ollama, Colibri, Camoufox, Playwright, Tor e Serena.
 
 O código do projeto é distribuído sob **MIT**. Os componentes de terceiros mantêm suas próprias licenças. Consulte [LICENSE](LICENSE) e [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) antes de redistribuir os pacotes.
+
