@@ -1,6 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { includeRuntimeFile, cleanConfig, safeRelativePath } from "./package-policy.mjs";
+import {
+  includeRuntimeFile,
+  cleanConfig,
+  safeRelativePath,
+  assertFreshConfig,
+} from "./package-policy.mjs";
 
 test("private state, models and cached backups never ship", () => {
   for (const platform of ["windows", "linux"])
@@ -59,6 +64,22 @@ test("public config is fresh, keeps rules and disables official upgrades", () =>
   assert(!Object.hasOwn(clean, "plugin"), "Do not override generated runtime plugins");
   assert(!JSON.stringify(clean).includes("secret"));
   assert.equal(original.model, "private/model");
+});
+
+test("release freshness accepts omitted plugins and rejects overrides or private selections", () => {
+  const fresh = cleanConfig({});
+  assert.doesNotThrow(() => assertFreshConfig(fresh));
+  for (const changes of [
+    { plugin: [] },
+    { plugin: ["private-plugin"] },
+    { model: "ollama/private" },
+    { small_model: "ollama/private" },
+    { autoupdate: true },
+    { mcp: { private: {} } },
+    { provider: { ollama: { models: { private: {} } } } },
+  ])
+    assert.throws(() => assertFreshConfig({ ...fresh, ...changes }), /not fresh/);
+  assert.throws(() => assertFreshConfig(null), /not fresh/);
 });
 
 test("machine-specific dependency markers and optional geolocation data are excluded", () => {

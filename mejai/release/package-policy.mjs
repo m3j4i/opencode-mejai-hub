@@ -162,3 +162,17 @@ export function cleanConfig(config) {
   clean.mcp = {};
   return clean;
 }
+
+export function assertFreshConfig(config) {
+  if (
+    !config ||
+    typeof config !== "object" ||
+    config.model ||
+    config.small_model ||
+    config.autoupdate ||
+    Object.hasOwn(config, "plugin") ||
+    Object.keys(config.provider?.ollama?.models || {}).length ||
+    Object.keys(config.mcp || {}).length
+  )
+    throw Error("Distribution configuration is not fresh");
+}

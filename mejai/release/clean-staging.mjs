@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { copyTree } from "./copy-service.mjs";
 import { releaseVersion } from "./release-documents.mjs";
+import { assertFreshConfig } from "./package-policy.mjs";
 
 const releaseDirectory = path.dirname(fileURLToPath(import.meta.url));
 const workspace = path.resolve(releaseDirectory, "../../..");
@@ -45,15 +46,7 @@ for (const platform of ["windows", "linux"]) {
       await removeOwned(root, name);
   }
   const config = JSON.parse(await fs.readFile(path.join(root, "opencode.json"), "utf8"));
-  if (
-    config.model ||
-    config.small_model ||
-    config.autoupdate ||
-    Object.keys(config.provider.ollama.models).length ||
-    config.plugin.length ||
-    Object.keys(config.mcp).length
-  )
-    throw Error("Distribution is not fresh");
+  assertFreshConfig(config);
 }
 const source = path.join(staging, "source/opencode-mejai");
 await copyTree(

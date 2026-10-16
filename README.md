@@ -4,12 +4,12 @@
 
 # OpenCode (mejai hub)
 
-[![Versão](https://img.shields.io/badge/version-1.18.35--mejai.1-8ee9ad?style=flat-square)](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261014)
+[![Versão](https://img.shields.io/badge/version-1.18.35--mejai.1-8ee9ad?style=flat-square)](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261015.1)
 [![Licença MIT](https://img.shields.io/badge/license-MIT-8ee9ad?style=flat-square)](LICENSE)
 ![Plataformas](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux-68766d?style=flat-square)
 ![Idiomas](https://img.shields.io/badge/languages-PT--BR%20%7C%20EN%20%7C%20RU-68766d?style=flat-square)
 
-**[Atualização do chat](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261015) · [Baixar o pacote completo](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261014) · [Documentação](mejai/docs/) · [Reportar um problema](https://github.com/m3j4i/opencode-mejai-hub/issues)**
+**[Versão corrigida](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261015.1) · [Baixar o pacote completo](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261015.1) · [Documentação](mejai/docs/) · [Reportar um problema](https://github.com/m3j4i/opencode-mejai-hub/issues)**
 
 </div>
 
@@ -163,13 +163,13 @@ Textos da interface e explicações dos botões ficam em arquivos `.language`, f
 
 ## 📦 Instalação
 
-Baixe o pacote correspondente ao seu sistema na [Release v1.18.35-mejai.1-hub.20261014](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261014) e confira o [SHA256SUMS.txt](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261014/SHA256SUMS.txt).
+Baixe o pacote correspondente ao seu sistema na [Release v1.18.35-mejai.1-hub.20261015.1](https://github.com/m3j4i/opencode-mejai-hub/releases/tag/v1.18.35-mejai.1-hub.20261015.1) e confira o [SHA256SUMS.txt](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261015.1/SHA256SUMS.txt).
 
 | Download | Arquitetura | Tamanho aproximado |
 | --- | --- | --- |
-| [🪟 Windows](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261014/opencode-mejai-windows-x64-1.18.35-mejai.1-hub.20261014.7z) | x86_64 | 1,96 GiB |
-| [🐧 Linux](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261014/opencode-mejai-linux-x64-1.18.35-mejai.1-hub.20261014.tar.xz) | x86_64 | 1,67 GiB |
-| [📂 Código-fonte completo](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261014/opencode-mejai-source-1.18.35-mejai.1-hub.20261014.zip) | Fonte | cerca de 75 MiB |
+| [🪟 Windows](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261015.1/opencode-mejai-windows-x64-1.18.35-mejai.1-hub.20261015.1.7z) | x86_64 | 1,96 GiB |
+| [🐧 Linux](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261015.1/opencode-mejai-linux-x64-1.18.35-mejai.1-hub.20261015.1.tar.xz) | x86_64 | 1,67 GiB |
+| [📂 Código-fonte completo](https://github.com/m3j4i/opencode-mejai-hub/releases/download/v1.18.35-mejai.1-hub.20261015.1/opencode-mejai-source-1.18.35-mejai.1-hub.20261015.1.zip) | Fonte | cerca de 75 MiB |
 
 | Pacote | Como iniciar |
 | --- | --- |
@@ -217,13 +217,13 @@ Para contribuir, siga [CONTRIBUTING.md](CONTRIBUTING.md). Relate problemas inclu
 
 ## 🧪 Estado atual e verificações
 
-A distribuição `1.18.35-mejai.1-hub.20261014` foi verificada com:
+A distribuição `1.18.35-mejai.1-hub.20261015.1` foi verificada com:
 
-- 28 grupos de regressão no Windows e 26 no Linux.
-- 7 testes de empacotamento e 2 testes da ferramenta Python nativa.
+- 29 grupos de regressão no Windows e 27 no Linux.
+- 10 verificações adicionais de empacotamento, atualização e inicialização.
 - Verificações de sintaxe, lint, formatação e tamanho dos novos módulos.
 - Integridade dos três arquivos compactados.
-- Extração em outras pastas e primeira inicialização com zero conversas.
+- Extração em outras pastas, primeira inicialização com zero conversas e uma troca completa de mensagem pelo Hub com protocolo Ollama simulado.
 - Carregamento de ferramentas de documentos, OCR e Serena, além de Chromium e Camoufox.
 
 Essas verificações usaram um serviço Ollama simulado, sem prompts reais. Elas não constituem um benchmark de qualidade dos modelos. Laya permanece em avaliação e não controla a autonomia desta versão.
@@ -233,4 +233,3 @@ Essas verificações usaram um serviço Ollama simulado, sem prompts reais. Elas
 Construído sobre o [OpenCode](https://github.com/anomalyco/opencode), com integrações de projetos como Ollama, Colibri, Camoufox, Playwright, Tor e Serena.
 
 O código do projeto é distribuído sob **MIT**. Os componentes de terceiros mantêm suas próprias licenças. Consulte [LICENSE](LICENSE) e [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) antes de redistribuir os pacotes.
-

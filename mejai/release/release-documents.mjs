@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 export const engineVersion = "1.18.35-mejai.1";
-export const releaseVersion = engineVersion + "-hub.20261015";
+export const releaseVersion = engineVersion + "-hub.20261015.1";
 export async function writeReleaseDocuments(destination, platform) {
   const manifest = {
     version: releaseVersion,
